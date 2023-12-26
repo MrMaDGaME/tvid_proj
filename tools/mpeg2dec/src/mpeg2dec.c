@@ -52,7 +52,7 @@ static vo_open_t * output_open = NULL;
 static vo_instance_t * output;
 static int sigint = 0;
 static int total_offset = 0;
-static int verbose = 0;
+static int verbose = 1;
 
 void dump_state (FILE * f, mpeg2_state_t state, const mpeg2_info_t * info,
 		 int offset, int verbose);
