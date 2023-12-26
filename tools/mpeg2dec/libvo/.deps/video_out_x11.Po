@@ -1,0 +1,4 @@
+video_out_x11.o: video_out_x11.c \
+ /run/current-system/sw/include/stdc-predef.h ../include/config.h
+/run/current-system/sw/include/stdc-predef.h:
+../include/config.h:

@@ -1,0 +1,67 @@
+gettimeofday.o: gettimeofday.c \
+ /run/current-system/sw/include/stdc-predef.h ../include/config.h \
+ gettimeofday.h /run/current-system/sw/include/sys/time.h \
+ /run/current-system/sw/include/features.h \
+ /run/current-system/sw/include/features-time64.h \
+ /run/current-system/sw/include/bits/wordsize.h \
+ /run/current-system/sw/include/bits/timesize.h \
+ /run/current-system/sw/include/sys/cdefs.h \
+ /run/current-system/sw/include/bits/long-double.h \
+ /run/current-system/sw/include/gnu/stubs.h \
+ /run/current-system/sw/include/gnu/stubs-64.h \
+ /run/current-system/sw/include/bits/types.h \
+ /run/current-system/sw/include/bits/typesizes.h \
+ /run/current-system/sw/include/bits/time64.h \
+ /run/current-system/sw/include/bits/types/time_t.h \
+ /run/current-system/sw/include/bits/types/struct_timeval.h \
+ /run/current-system/sw/include/sys/select.h \
+ /run/current-system/sw/include/bits/select.h \
+ /run/current-system/sw/include/bits/types/sigset_t.h \
+ /run/current-system/sw/include/bits/types/__sigset_t.h \
+ /run/current-system/sw/include/bits/types/struct_timespec.h \
+ /run/current-system/sw/include/bits/endian.h \
+ /run/current-system/sw/include/bits/endianness.h \
+ /run/current-system/sw/include/time.h \
+ /nix/store/b7hvml0m3qmqraz1022fwvyyg6fc1vdy-gcc-12.2.0/lib/gcc/x86_64-unknown-linux-gnu/12.2.0/include/stddef.h \
+ /run/current-system/sw/include/bits/time.h \
+ /run/current-system/sw/include/bits/types/clock_t.h \
+ /run/current-system/sw/include/bits/types/struct_tm.h \
+ /run/current-system/sw/include/bits/types/clockid_t.h \
+ /run/current-system/sw/include/bits/types/timer_t.h \
+ /run/current-system/sw/include/bits/types/struct_itimerspec.h \
+ /run/current-system/sw/include/bits/types/locale_t.h \
+ /run/current-system/sw/include/bits/types/__locale_t.h
+/run/current-system/sw/include/stdc-predef.h:
+../include/config.h:
+gettimeofday.h:
+/run/current-system/sw/include/sys/time.h:
+/run/current-system/sw/include/features.h:
+/run/current-system/sw/include/features-time64.h:
+/run/current-system/sw/include/bits/wordsize.h:
+/run/current-system/sw/include/bits/timesize.h:
+/run/current-system/sw/include/sys/cdefs.h:
+/run/current-system/sw/include/bits/long-double.h:
+/run/current-system/sw/include/gnu/stubs.h:
+/run/current-system/sw/include/gnu/stubs-64.h:
+/run/current-system/sw/include/bits/types.h:
+/run/current-system/sw/include/bits/typesizes.h:
+/run/current-system/sw/include/bits/time64.h:
+/run/current-system/sw/include/bits/types/time_t.h:
+/run/current-system/sw/include/bits/types/struct_timeval.h:
+/run/current-system/sw/include/sys/select.h:
+/run/current-system/sw/include/bits/select.h:
+/run/current-system/sw/include/bits/types/sigset_t.h:
+/run/current-system/sw/include/bits/types/__sigset_t.h:
+/run/current-system/sw/include/bits/types/struct_timespec.h:
+/run/current-system/sw/include/bits/endian.h:
+/run/current-system/sw/include/bits/endianness.h:
+/run/current-system/sw/include/time.h:
+/nix/store/b7hvml0m3qmqraz1022fwvyyg6fc1vdy-gcc-12.2.0/lib/gcc/x86_64-unknown-linux-gnu/12.2.0/include/stddef.h:
+/run/current-system/sw/include/bits/time.h:
+/run/current-system/sw/include/bits/types/clock_t.h:
+/run/current-system/sw/include/bits/types/struct_tm.h:
+/run/current-system/sw/include/bits/types/clockid_t.h:
+/run/current-system/sw/include/bits/types/timer_t.h:
+/run/current-system/sw/include/bits/types/struct_itimerspec.h:
+/run/current-system/sw/include/bits/types/locale_t.h:
+/run/current-system/sw/include/bits/types/__locale_t.h:
