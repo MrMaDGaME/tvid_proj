@@ -1,0 +1,116 @@
+import numpy as np
+from PIL import Image
+
+
+def YUV_to_RGB(y, u, v) :
+    r = y + 1.13983 * v
+    g = y - 0.39465 * u - 0.58060 * v
+    b = y + 2.03211 * u
+    
+    return r, g, b
+
+
+def PGM_to_PPM(yuv_array, TFF=True) :
+    # loading pgm info
+
+    height, width = yuv_array.shape
+    
+    uv_width = width // 2
+    y_height = int(height * 2 / 3)
+    
+    # extraction
+    
+    y_array = yuv_array[0:y_height, 0:width]
+    u_array = yuv_array[y_height:height, 0:uv_width]
+    v_array = yuv_array[y_height:height, uv_width:width]
+    
+    # duplication (to match the size of y)
+    
+    u_array = np.repeat(np.repeat(u_array, 2, axis=1), 2, axis=0)
+    v_array = np.repeat(np.repeat(v_array, 2, axis=1), 2, axis=0)
+    
+    if TFF :
+        y_array = np.repeat(y_array, 2, axis=0)
+        u_array = np.repeat(u_array, 2, axis=0)
+        v_array = np.repeat(v_array, 2, axis=0)
+        
+        y_height *= 2
+    
+    # normalization
+
+    y_array = y_array / 255
+    
+    u_max = 0.436
+    u_min = -u_max
+    u_array = u_min + (u_array / 255) * 2 * u_max
+    
+    v_max = 0.615
+    v_min = -v_max
+    v_array = v_min + (v_array / 255) * 2 * v_max
+    
+    # stacking
+    
+    yuv_data = np.stack((y_array, u_array, v_array), axis=-1)
+    
+    # conversion to rgb data between [0, 1]
+    
+    rgb_data = []
+    
+    for i in range(y_height) :
+        rgb_data.append([])
+        
+        for j in range(width) :
+            y = yuv_data[i][j][0]
+            u = yuv_data[i][j][1]
+            v = yuv_data[i][j][2]
+            
+            r, g, b = YUV_to_RGB(y, u, v)
+            
+            rgb_data[i].append([r, g, b])
+            
+    rgb_data = np.array(rgb_data)
+    
+    rgb_data = np.clip(rgb_data, 0, 1)
+            
+    # conversion to uint-8 values between [0, 255]
+    
+    rgb_data = (rgb_data * 255).astype('uint8')
+    
+    return rgb_data
+
+
+def generic_PGM_to_PPM(pgm_path, ppm_path=None, TFF=True) :
+    # loading pgm
+    
+    img = Image.open(pgm_path)
+    
+    yuv_array = np.array(img)
+    
+    # top first field order
+    
+    if TFF :
+        rgb_data_top = PGM_to_PPM(yuv_array[::2], TFF=True)
+        rgb_data_bottom = PGM_to_PPM(yuv_array[1::2], TFF=True)
+        
+        # saving as ppm
+        
+        if ppm_path :
+            new_img_1 = Image.fromarray(rgb_data_top)
+            new_img_2 = Image.fromarray(rgb_data_bottom)
+            
+            new_img_1.save(ppm_path + "_1.ppm")
+            new_img_2.save(ppm_path + "_2.ppm")
+            
+        return rgb_data_top, rgb_data_bottom
+    
+    # progressive order
+    
+    rgb_data = PGM_to_PPM(yuv_array, TFF=False)
+    
+    # saving as ppm
+    
+    if ppm_path :
+        new_img = Image.fromarray(rgb_data)
+        new_img.save(ppm_path + ".ppm")
+    
+    return rgb_data
