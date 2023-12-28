@@ -66,6 +66,27 @@ static RETSIGTYPE signal_handler (int sig)
     return (RETSIGTYPE)0;
 }
 
+void logProgressiveSequenceFlag(const mpeg2_info_t *info) {
+    if (info) {
+        const mpeg2_sequence_t *sequence = info->sequence;
+
+        if (sequence) {
+            int progressiveSequenceFlag = (sequence->flags & SEQ_FLAG_PROGRESSIVE_SEQUENCE) != 0;
+            printf("Progressive Sequence Flag: %d\n", progressiveSequenceFlag);
+
+            if (progressiveSequenceFlag == 1) {
+                printf("All images in the MPEG-2 sequence are progressive.\n");
+            } else {
+                printf("Not all images in the MPEG-2 sequence are progressive.\n");
+            }
+        } else {
+            printf("Error: Sequence information is NULL.\n");
+        }
+    } else {
+        printf("Error: MPEG-2 information is NULL.\n");
+    }
+}
+
 static void print_fps (int final)
 {
     static uint32_t frame_counter = 0;
@@ -790,6 +811,9 @@ int main (int argc, char ** argv)
 	ps_loop ();
     else
 	es_loop ();
+
+	const mpeg2_info_t *info = mpeg2_info(mpeg2dec);
+	logProgressiveSequenceFlag(info);
 
     mpeg2_close (mpeg2dec);
     if (output->close)
