@@ -18,6 +18,12 @@ def display(ppm_images, fps) :
         
 
 def save(ppm_images, output_path) :
+    if args.ppm[-1] != "/" :
+        args.ppm += "/"
+        
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    
     index_frame = 0
     
     for ppm_data in ppm_images :
@@ -42,6 +48,9 @@ args = args_parser.parse_args()
 
     
 def main(args) :
+    if args.pgm[-1] != "/" :
+        args.pgm += "/"
+    
     pgm_images = os.listdir(args.pgm)
 
     pgm_images = [filename for filename in pgm_images if filename.lower().endswith(".pgm")]
