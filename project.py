@@ -39,7 +39,7 @@ args_parser.add_argument("--pgm", type=str, help="Input folder path containing P
 
 args_parser.add_argument("--ppm", type=str, help="Output folder path to load PPM images, instead of showing them")
 
-args_parser.add_argument("--tff", action="store_true", help="Process images as TFF (top first field)", default=False)
+args_parser.add_argument("--bob_deinterlace", action="store_true", help="Deinterlace PPM images", default=False)
 
 # From the mpeg2dec logs for the video bw_numbers.m2v, default fps is equal to 29.97.
 args_parser.add_argument("--fps", type=float, help="Output video FPS when displayed", default=29.97)
@@ -61,7 +61,7 @@ def main(args) :
     
     print("Generating PPM RGB images ...")
     for pgm_path in pgm_images :
-        ppm_images = ppm_images + pgm_to_ppm.generic_PGM_to_PPM(args.pgm + pgm_path, args.tff)
+        ppm_images = ppm_images + pgm_to_ppm.generic_PGM_to_PPM(args.pgm + pgm_path, args.bob_deinterlace)
 
     if args.ppm == None :
         print("Displaying PPM RGB images in video ...")

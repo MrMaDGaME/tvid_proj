@@ -10,7 +10,7 @@ def YUV_to_RGB(y, u, v) :
     return r, g, b
 
 
-def PGM_to_PPM(yuv_array, TFF=True) :
+def PGM_to_PPM(yuv_array, BOB_DEINTERLACE=True) :
     # loading pgm info
 
     height, width = yuv_array.shape
@@ -29,7 +29,7 @@ def PGM_to_PPM(yuv_array, TFF=True) :
     u_array = np.repeat(np.repeat(u_array, 2, axis=1), 2, axis=0)
     v_array = np.repeat(np.repeat(v_array, 2, axis=1), 2, axis=0)
     
-    if TFF :
+    if BOB_DEINTERLACE :
         y_array = np.repeat(y_array, 2, axis=0)
         u_array = np.repeat(u_array, 2, axis=0)
         v_array = np.repeat(v_array, 2, axis=0)
@@ -63,7 +63,7 @@ def PGM_to_PPM(yuv_array, TFF=True) :
     return rgb_data
 
 
-def generic_PGM_to_PPM(pgm_path, TFF=True) :
+def generic_PGM_to_PPM(pgm_path, BOB_DEINTERLACE=True) :
     # loading pgm
     
     img = Image.open(pgm_path)
@@ -72,14 +72,14 @@ def generic_PGM_to_PPM(pgm_path, TFF=True) :
     
     # top first field order
     
-    if TFF :
-        rgb_data_top = PGM_to_PPM(yuv_array[::2], TFF=True)
-        rgb_data_bottom = PGM_to_PPM(yuv_array[1::2], TFF=True)
+    if BOB_DEINTERLACE :
+        rgb_data_top = PGM_to_PPM(yuv_array[::2], BOB_DEINTERLACE=True)
+        rgb_data_bottom = PGM_to_PPM(yuv_array[1::2], BOB_DEINTERLACE=True)
             
         return [rgb_data_top, rgb_data_bottom]
     
     # progressive order
     
-    rgb_data = PGM_to_PPM(yuv_array, TFF=False)
+    rgb_data = PGM_to_PPM(yuv_array, BOB_DEINTERLACE=False)
     
     return [rgb_data]
