@@ -7,11 +7,13 @@ import cv2
 import pgm_to_ppm
 
 
-def display(ppm_images) :
+def display(ppm_images, fps) :
+    delay_time = int(1000 / fps) # fps is in sec, delay_time is in ms
+    
     for ppm_data in ppm_images :
         cv2.imshow("Output video from PPM images", ppm_data[..., ::-1])
         
-        if cv2.waitKey(25) & 0xFF == ord('q') :
+        if cv2.waitKey(delay_time) & 0xFF == ord('q') :
             break
         
 
@@ -33,7 +35,8 @@ args_parser.add_argument("--ppm", type=str, help="Output folder path to load PPM
 
 args_parser.add_argument("--tff", action="store_true", help="Process images as TFF (top first field)", default=False)
 
-args_parser.add_argument("--fps", type=int, help="Output video FPS when displayed", default=25)
+# From the mpeg2dec logs for the video bw_numbers.m2v, default fps is equal to 29.97.
+args_parser.add_argument("--fps", type=float, help="Output video FPS when displayed", default=29.97)
 
 args = args_parser.parse_args()
 
@@ -51,7 +54,7 @@ def main(args) :
 
     if args.ppm == None :
         print("Displaying PPM RGB images in video ...")
-        display(ppm_images)
+        display(ppm_images, args.fps)
     
     else :
         print("Saving PPM RGB images into " + args.ppm + " ...")
