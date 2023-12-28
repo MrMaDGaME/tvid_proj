@@ -79,7 +79,7 @@ def PGM_to_PPM(yuv_array, TFF=True) :
     return rgb_data
 
 
-def generic_PGM_to_PPM(pgm_path, ppm_path=None, TFF=True) :
+def generic_PGM_to_PPM(pgm_path, TFF=True) :
     # loading pgm
     
     img = Image.open(pgm_path)
@@ -91,26 +91,11 @@ def generic_PGM_to_PPM(pgm_path, ppm_path=None, TFF=True) :
     if TFF :
         rgb_data_top = PGM_to_PPM(yuv_array[::2], TFF=True)
         rgb_data_bottom = PGM_to_PPM(yuv_array[1::2], TFF=True)
-        
-        # saving as ppm
-        
-        if ppm_path :
-            new_img_1 = Image.fromarray(rgb_data_top)
-            new_img_2 = Image.fromarray(rgb_data_bottom)
             
-            new_img_1.save(ppm_path + "_1.ppm")
-            new_img_2.save(ppm_path + "_2.ppm")
-            
-        return rgb_data_top, rgb_data_bottom
+        return [rgb_data_top, rgb_data_bottom]
     
     # progressive order
     
     rgb_data = PGM_to_PPM(yuv_array, TFF=False)
     
-    # saving as ppm
-    
-    if ppm_path :
-        new_img = Image.fromarray(rgb_data)
-        new_img.save(ppm_path + ".ppm")
-    
-    return rgb_data
+    return [rgb_data]
