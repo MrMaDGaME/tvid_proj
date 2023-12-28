@@ -27,14 +27,16 @@ def save(ppm_images, output_path) :
 
 args_parser = ArgumentParser(description="Application to visualize mpeg2dec flow")
 
-args_parser.add_argument("--pgm", type=str, help="Folder input path containing PGM images", required=True)
+args_parser.add_argument("--pgm", type=str, help="Input folder path containing PGM images", required=True)
 
-args_parser.add_argument("--ppm", type=str, help="Folder output path to load PPM images, instead of showing them")
+args_parser.add_argument("--ppm", type=str, help="Output folder path to load PPM images, instead of showing them")
 
-args_parser.add_argument("--tff", action="store_true", help="Process images as top first field", default=False)
+args_parser.add_argument("--tff", action="store_true", help="Process images as TFF (top first field)", default=False)
+
+args_parser.add_argument("--fps", type=int, help="Output video FPS when displayed", default=25)
 
 args = args_parser.parse_args()
-    
+
     
 def main(args) :
     pgm_images = os.listdir(args.pgm)
