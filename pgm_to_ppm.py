@@ -48,27 +48,11 @@ def PGM_to_PPM(yuv_array, TFF=True) :
     v_min = -v_max
     v_array = v_min + (v_array / 255) * 2 * v_max
     
-    # stacking
+    # stacking and conversion to rgb data between [0, 1]
     
-    yuv_data = np.stack((y_array, u_array, v_array), axis=-1)
+    r_array, g_array, b_array = YUV_to_RGB(y_array, u_array, v_array)
     
-    # conversion to rgb data between [0, 1]
-    
-    rgb_data = []
-    
-    for i in range(y_height) :
-        rgb_data.append([])
-        
-        for j in range(width) :
-            y = yuv_data[i][j][0]
-            u = yuv_data[i][j][1]
-            v = yuv_data[i][j][2]
-            
-            r, g, b = YUV_to_RGB(y, u, v)
-            
-            rgb_data[i].append([r, g, b])
-            
-    rgb_data = np.array(rgb_data)
+    rgb_data = np.stack([r_array, g_array, b_array], axis=-1)
     
     rgb_data = np.clip(rgb_data, 0, 1)
             
