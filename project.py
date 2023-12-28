@@ -2,13 +2,14 @@ import os
 import numpy as np
 from PIL import Image
 from argparse import ArgumentParser
+#import cv2
 
 import pgm_to_ppm
 
     
 def display(ppm_images) :
-    for ppm_path in ppm_images :
-        img = Image.fromarray(ppm_data)
+    for ppm_data in ppm_images :
+        img = Image.fromarray(ppm_images[0])
         img.show()
         
 
@@ -22,7 +23,7 @@ def save(ppm_images, output_path) :
 
 args_parser = ArgumentParser(description="Application to visualize mpeg2dec flow")
 
-args_parser.add_argument("--input", type=str, help="Folder input path containing PGM images", required=True)
+args_parser.add_argument("--pgm", type=str, help="Folder input path containing PGM images", required=True)
 
 args_parser.add_argument("--ppm", type=str, help="Folder output path to load PPM images, instead of showing them")
 
@@ -32,14 +33,17 @@ args = args_parser.parse_args()
     
     
 def main(args) :
-    pgm_images = os.listdir(args.input)
+    pgm_images = os.listdir(args.pgm)
     
-    pgm_images.sort()
+    pgm_images.sort(key=lambda s: int(''.join(filter(str.isdigit, s))))
+    
+    print(pgm_images)
+    print(args.pgm)
     
     ppm_images = []
     
     for pgm_path in pgm_images :
-        ppm_images = ppm_images + pgm_to_ppm.generic_PGM_to_PPM(pgm_path, args.tff)
+        ppm_images = ppm_images + pgm_to_ppm.generic_PGM_to_PPM(args.pgm + pgm_path, args.tff)
 
     if args.ppm == None :
         display(ppm_images)
