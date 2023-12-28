@@ -43,6 +43,8 @@ args = args_parser.parse_args()
     
 def main(args) :
     pgm_images = os.listdir(args.pgm)
+
+    pgm_images = [filename for filename in pgm_images if filename.lower().endswith(".pgm")]
     
     pgm_images.sort(key=lambda s: int(''.join(filter(str.isdigit, s))))
     
